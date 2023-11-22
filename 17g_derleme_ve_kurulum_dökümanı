@@ -1,0 +1,24 @@
+17g Live Installer derleme ve kurulum aşamaları
+
+1- Terminali açalım ve sudo su komutu ile root olalım sonra apt update yapalım.
+
+2- apt install git devscripts
+
+3- 17g yi klonlayalım: git clone https://gitlab.com/ggggggggggggggggg/17g.git
+
+4- chown user -R 17g/ yapalım.
+
+5- 17g dizini içinde custom dizini oluşturup custom dizini içine branding ve configs dizinlerini kopyalıyoruz. (brandig dizini içindeki welcome.png ve slides dizini içindeki resimlerin formatları 16.9 olmalıdır!)
+
+6- configs içindeki config.yaml dosyasında dilediğimiz ayarları yapıyoruz.(Örneğin distro_codename kısmına distro adını yazalım)
+
+7- Buradaki en önemli kısım remove_packages kısmı. Öncelikle bu kısmı açıp (- 17g ve - live-*) ekleyelim aksi takdirde kurulum aracı kaldırılmamış olacaktır.
+
+8- Şimdi derleme aşamasına geçelim önce cd 17g/ komutu ile dizine girelim. mk-build-deps -i ve dpkg-buildpackage komutları ile .deb paketimizi oluşturalım. 
+
+9- 17g_1.0_all.deb şeklinde oluşan paketi kurmak için dpkg -i 17g_1.0_all.deb komutunu yazalım.
+
+10- Eksik bağımlılık paketleri içinde apt install -f yaparak giderelim. Böylece 17g live installer aracını sistemimize kurmuş olduk.
+
+Güle güle kullanın. :) 
+
