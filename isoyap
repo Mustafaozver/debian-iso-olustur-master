@@ -28,30 +28,30 @@ fi
 clear
 echo "${yesil}</> ${kirmizi}Gerekli Paketler Yükleniyor ${yesil}</>"
 echo "${yesil}</> ${kirmizi}Yüklenecek Paketler : debootstrap xorriso squashfs-tools mtools grub-pc-bin grub-efi devscripts nano${yesil} </> ${turkuaz}"
-apt install debootstrap xorriso squashfs-tools mtools grub-pc-bin grub-efi devscripts git nano
+sudo apt install debootstrap xorriso squashfs-tools mtools grub-pc-bin grub-efi devscripts git nano
 echo "${yesil}</> ${kirmizi} debian-chroot adlı dosya oluşturulup, debian'nın temeli bu dosyaya atılacak.. ${yesil}</> ${turkuaz}"
 mkdir debian-chroot
-chown root debian-chroot
-debootstrap --arch=amd64 --no-merged-usr sid debian-chroot https://deb.debian.org/debian
+sudo chown root debian-chroot
+sudo debootstrap --arch=amd64 --no-merged-usr sid debian-chroot https://deb.debian.org/debian
 echo "${yesil}</> ${kirmizi}Temel atıldı. içeriğe giriş yapılıp kernel driver vb yüklenecek.. ${yesil}</> ${turkuaz}"
-for i in dev dev/pts proc sys; do mount -o bind /$i debian-chroot/$i; done
+for i in dev dev/pts proc sys; do sudo mount -o bind /$i debian-chroot/$i; done
 echo 'deb http://deb.debian.org/debian sid main contrib non-free' > debian-chroot/etc/apt/sources.list
-chroot debian-chroot apt update
-chroot debian-chroot apt install linux-image-amd64 -y
-chroot debian-chroot apt install grub-pc-bin grub-efi-ia32-bin grub-efi -y
-chroot debian-chroot apt install live-config live-boot -y 
-chroot debian-chroot apt install xorg xinit -y
-chroot debian-chroot apt install atmel-firmware bluez-firmware dahdi-firmware-nonfree \
-  firmware-amd-graphics firmware-ath9k-htc firmware-atheros \
-  firmware-b43-installer firmware-b43legacy-installer firmware-bnx2 \
-  firmware-bnx2x firmware-brcm80211 firmware-cavium \
-  firmware-intel-sound firmware-intelwimax firmware-ipw2x00 \
-  firmware-ivtv firmware-iwlwifi firmware-libertas \
-  firmware-linux firmware-linux-free firmware-linux-nonfree \
-  firmware-misc-nonfree firmware-myricom firmware-netronome \
-  firmware-netxen firmware-qcom-soc firmware-qlogic \
-  firmware-realtek firmware-samsung firmware-siano \
-  firmware-sof-signed firmware-ti-connectivity firmware-zd1211 hdmi2usb-fx2-firmware -y
+sudo chroot debian-chroot apt update
+sudo chroot debian-chroot apt install linux-image-amd64 -y
+sudo chroot debian-chroot apt install grub-pc-bin grub-efi-ia32-bin grub-efi -y
+sudo chroot debian-chroot apt install live-config live-boot -y 
+sudo chroot debian-chroot apt install xorg xinit -y
+sudo chroot debian-chroot apt install atmel-firmware bluez-firmware dahdi-firmware-nonfree -y
+sudo chroot debian-chroot apt install firmware-amd-graphics firmware-ath9k-htc firmware-atheros -y
+sudo chroot debian-chroot apt install firmware-b43-installer firmware-b43legacy-installer firmware-bnx2 -y
+sudo chroot debian-chroot apt install firmware-bnx2x firmware-brcm80211 firmware-cavium -y
+sudo chroot debian-chroot apt install firmware-intel-sound firmware-intelwimax firmware-ipw2x00 -y
+sudo chroot debian-chroot apt install firmware-ivtv firmware-iwlwifi firmware-libertas -y
+sudo chroot debian-chroot apt install firmware-linux firmware-linux-free firmware-linux-nonfree -y
+sudo chroot debian-chroot apt install firmware-misc-nonfree firmware-myricom firmware-netronome -y
+sudo chroot debian-chroot apt install firmware-netxen firmware-qcom-soc firmware-qlogic -y
+sudo chroot debian-chroot apt install firmware-realtek firmware-samsung firmware-siano -y
+sudo chroot debian-chroot apt install firmware-sof-signed firmware-ti-connectivity firmware-zd1211 hdmi2usb-fx2-firmware -y
 echo "${yesil}</> ${kirmizi} <- - -> Lütfen Dikkatlice okuyunuz <- - ->   ${yesil}</>"
 echo "${yesil}</> ${kirmizi}Temel atıldı. Şimdi masaüstü ortamı ve istediğin uygulamaları kur. İşin bitince exit komutu ile çık ve ./isoolustur komutunu çalıştır..${yesil}</>"
-chroot debian-chroot /bin/bash
+sudo chroot debian-chroot /bin/bash
