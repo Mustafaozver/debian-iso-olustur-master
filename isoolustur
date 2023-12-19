@@ -39,8 +39,15 @@ mksquashfs debian-chroot filesystem.squashfs -comp gzip -wildcards
 mkdir -p isowork/live
 mv filesystem.squashfs isowork/live/filesystem.squashfs
 echo "${yesil}</> ${kirmizi}vmlinuz ve initrd dosyalarını isowork/live içerisine atalım. ${yesil}</> ${turkuaz}"
+
+
+cp -pf /boot/initrd.img* isowork/live/initrd.img
+cp -pf /boot/vmlinuz* isowork/live/vmlinuz
+
 cp -pf debian-chroot/boot/initrd.img* isowork/live/initrd.img
 cp -pf debian-chroot/boot/vmlinuz* isowork/live/vmlinuz
+
+
 echo "${yesil}</> ${kirmizi}grub.cfg dosyası oluşturalım. ${yesil}</> ${turkuaz}"
 mkdir -p isowork/boot/grub/
 echo 'insmod all_video' > isowork/boot/grub/grub.cfg

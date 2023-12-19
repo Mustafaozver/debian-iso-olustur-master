@@ -28,15 +28,23 @@ fi
 clear
 echo "${yesil}</> ${kirmizi}Gerekli Paketler Yükleniyor ${yesil}</>"
 echo "${yesil}</> ${kirmizi}Yüklenecek Paketler : debootstrap xorriso squashfs-tools mtools grub-pc-bin grub-efi devscripts nano${yesil} </> ${turkuaz}"
+
 sudo apt install debootstrap xorriso squashfs-tools mtools grub-pc-bin grub-efi devscripts git nano
+
 echo "${yesil}</> ${kirmizi} debian-chroot adlı dosya oluşturulup, debian'nın temeli bu dosyaya atılacak.. ${yesil}</> ${turkuaz}"
+
+
 mkdir debian-chroot
 sudo chown root debian-chroot
-sudo debootstrap --arch=amd64 --no-merged-usr sid debian-chroot https://deb.debian.org/debian
+sudo debootstrap --arch amd64 --no-merged-usr sid debian-chroot https://ftp.debian.org/debian
+
+
 echo "${yesil}</> ${kirmizi}Temel atıldı. içeriğe giriş yapılıp kernel driver vb yüklenecek.. ${yesil}</> ${turkuaz}"
 for i in dev dev/pts proc sys; do sudo mount -o bind /$i debian-chroot/$i; done
 echo 'deb http://deb.debian.org/debian sid main contrib non-free' > debian-chroot/etc/apt/sources.list
+
 sudo chroot debian-chroot apt update
+
 sudo chroot debian-chroot apt install linux-image-amd64 -y
 sudo chroot debian-chroot apt install grub-pc-bin grub-efi-ia32-bin grub-efi -y
 sudo chroot debian-chroot apt install live-config live-boot -y 
@@ -52,6 +60,14 @@ sudo chroot debian-chroot apt install firmware-misc-nonfree firmware-myricom fir
 sudo chroot debian-chroot apt install firmware-netxen firmware-qcom-soc firmware-qlogic -y
 sudo chroot debian-chroot apt install firmware-realtek firmware-samsung firmware-siano -y
 sudo chroot debian-chroot apt install firmware-sof-signed firmware-ti-connectivity firmware-zd1211 hdmi2usb-fx2-firmware -y
+
+sudo chroot debian-chroot /bin/bash -c "apt-get update && apt-get install -y build-essential libncurses-dev bison flex libssl-dev bc && mkdir -p /usr/src && cd /usr/src && git clone https://github.com/xanmod/linux.git && cd linux && git checkout xanmod && make localmodconfig && make -j$(nproc) && make modules_install && make install"
+
+sudo chroot debian-chroot apt install kde-full -y
+sudo chroot debian-chroot update-grub
+sudo chroot debian-chroot grub-install
+
 echo "${yesil}</> ${kirmizi} <- - -> Lütfen Dikkatlice okuyunuz <- - ->   ${yesil}</>"
 echo "${yesil}</> ${kirmizi}Temel atıldı. Şimdi masaüstü ortamı ve istediğin uygulamaları kur. İşin bitince exit komutu ile çık ve ./isoolustur komutunu çalıştır..${yesil}</>"
+
 sudo chroot debian-chroot /bin/bash
